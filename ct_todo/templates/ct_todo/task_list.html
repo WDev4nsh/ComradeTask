@@ -1,0 +1,123 @@
+{% extends 'ct_todo/base.html' %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto mt-3 px-2 bg-gradient-to-r from-purple-50 via-red-200 to-purple-100 py-2 my-6 rounded-lg shadow-inner  overflow-x-auto">
+    
+    <div class="bg-gradient-to-r from-purple-50 via-red-200 to-purple-100 text-center text-lg text-gray-700 py-2 mb-7 rounded-t-xl shadow-sm">
+        
+        <h1 class="text-2xl" style="font-family: 'Russo One', sans-serif;">
+            Welcome To ComradeTask ★<span style="color: red; text-shadow: 0 0 10px yellow, 0 0 10px red;"></span>
+        </h1>
+        <h1 class="italic mb-5">"Let's get things done"</h1>
+        
+        <div class="flex justify-center items-center flex-start">
+                <!-- SEARCH FORMSSS -->
+                <form method="GET" class="flex gap-2">
+                    <!-- SEARCH BARRRRR -->
+                    <input type="text" name="search" value="{{ search_queryy }}" placeholder="Search Tasks Here..." class="px-2 border border-gray-400 rounded-lg">
+                    
+                        <!-- SEARCH FILTERSSS -->
+                        <select name="status" id="" class="px-2 border border-gray-400 rounded-lg">
+                            <option value="">All</option>
+                            {% for s in statuses %}
+                                <option value="{{ s }}" {% if filter_statuss == s %}selected{% endif %}>{{ s }}</option>
+                            {% endfor %}
+                        </select>
+
+
+                        <!-- SEARCH FILTERSSS FOR CATEGORY -->
+                        <select name="category" id="" class="px-2 border border-gray-400 rounded-lg">
+                            <option value="">All</option>
+                            {% for cat in categories %}
+                                <option value="{{ cat.id }}" {% if filter_category == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        
+                        <button type="submit" class="bg-blue-400 text-white px-3 rounded-lg hover:bg-blue-500">Search</button>
+                    </form>
+                </div>
+
+
+        
+        
+
+
+
+
+        
+
+    </div>
+    
+    <div class="text-center mb-5">
+        <a href="{% url 'create-task' %}" class="bg-gradient-to-r from-yellow-300 via-red-300 to-purple-300 px-5 py-1 rounded-md     border-2 border-blue-500      transform transition-all duration-300 hover:scale-105 hover:-translate-y-0 hover:shadow-lg inline-block">Add Task</a>
+    </div>
+   
+    
+        
+        <table class="min-w-full h-full border border-gray-300 rounded-lg overflow-hidden table-fixed w-full">
+            <tr>
+                <th class="w-[75px] border-b border-gray-300">No.</th>
+                <th class="w-[150px] border-b border-gray-300">Task</th>
+                <th class="w-[250px] border-b border-gray-300">Description</th>
+                <th class="w-[90px] border-b border-gray-300">Category</th>
+                <th class="w-[130px] border-b border-gray-300">Status</th>
+                <th class="w-[210px] border-b border-gray-300">Action</th>
+            </tr>
+            <thead>
+                <tbody>
+                    {% for task in taskss %}
+                    <tr class="">
+                        <td class="text-center border-b border-gray-300">{{ forloop.counter }}</td>
+                        <td class="truncate px-2 py-2 border-b border-gray-300">{{ task.title }}</td>
+                        <td class="truncate px-2 border-b border-gray-300">{{ task.description }}</td>
+                        <td class="text-center truncate border-b border-gray-300">
+                            {% if task.category %}
+                                {{ task.category }}
+                            {% else %}
+                                --
+                            {% endif %}
+                        </td>
+                        <td class="truncate pl-7 border-b border-gray-300">
+                            <span>
+                                {% with s=task.status %}
+                                    {% if "Overdue" in s %}
+                                        <span style="color:red;">🔴 {{ s }}</span>
+                                    {% elif "Tomorrow" in s %}
+                                        <span style="color:orange;">🟠 {{ s }}</span>
+                                    {% elif "Due Today" in s %}
+                                        <span style="color:orange;">🟠 {{ s }}</span>
+                                    {% elif "Due in" in s %}
+                                        <span style="color:green;">🟢 {{ s }}</span>
+                                    {% elif "this week" in s %}
+                                        <span style="color:blue;">🔵 {{ s }}</span>
+                                    {% elif "No Rush" in s %}
+                                        <span style="color:purple;">🟣 {{ s }}</span>
+                                    {% elif "Complete" in s %}
+                                        <span style="color:yellow;">🟡 Done</span>
+                                    {% else %}
+                                        <span style="color:gray;">⚪ No Deadline</span>
+                                    {% endif %}
+                                {% endwith %}
+                            </span>
+                        </td>
+                        <td class="space-x-2 text-center border-b border-gray-300">
+                            <a href="{% url 'toggle-complete' task.id %}" class="bg-green-400 rounded-md px-3 border-2 border-blue-500 hover:bg-green-500 hover:text-yellow-300 inline-block">
+                                {% if task.complete %}Incomplete{% else %}Complete{% endif %}
+                            </a>
+                            <a href="{% url 'update-task' task.id %}" class="bg-yellow-300 rounded-md px-4 border-2 border-blue-500    hover:bg-violet-500 hover:text-yellow-300 inline-block     ">Edit</a>
+                            <a href="{% url 'delete-task' task.id %}" class="bg-red-400 rounded-md px-3 border-2 border-blue-500 hover:bg-red-500 hover:text-yellow-300 inline-block  ">Delete</a>
+                        </td>
+                    </tr>
+                    
+
+                    {% endfor %}
+                </tbody>
+            </thead>
+        </table>    
+        <br>
+       
+</div>
+
+{% endblock %}

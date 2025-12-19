@@ -1,0 +1,39 @@
+{% extends 'ct_todo/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto my-7 p-4 bg-cyan-100 shadow-2xl rounded-xl">
+
+    <h2 class="text-xl font-bold mb-4">Your Profile:</h2>
+
+    <img src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'profile_pics/default_profile.png' %}{% endif %}" 
+         class="w-32 h-32 rounded-full mx-auto mb-3 object-cover">
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3 flex items-center space-x-3">
+                <label for="{{ form.title.id_for_label }}" class="block text-lg text-gray-700 mr-5">📝 Name :</label>
+                {{ form.display_name }}
+            </div>
+            
+            <div class="mb-3 flex items-start space-x-11">
+                <label for="{{ form.title.id_for_label }}" class="block text-lg text-gray-700 mr-2">📝 Bio :</label>
+                {{ form.bio }}
+            </div>
+
+            <div class="mb-3 items-start">
+                <label for="{{ form.title.id_for_label }}" class="block text-lg text-gray-700 mr-2">📝 Profile Pic :</label>
+                {{ form.profile_image }}
+            </div>
+            
+            <div class="w-full flex justify-end">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded mt-2 transform transition-all duration-300 hover:scale-105 hover:translate-y-0 hover:shadow-2xl hover:bg-blue-400">
+                Save Changes
+            </button>
+            </div>
+            
+        </div>
+    </form>
+
+</div>
+{% endblock %}

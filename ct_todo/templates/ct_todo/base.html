@@ -1,0 +1,124 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <title>{% block title %}ComradeTask{% endblock %}</title>
+
+    <!-- TAILWIND CDN -->
+     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body{
+            font-family: 'Russo One', sans-serif;
+        }
+
+        .hover-underline-rl {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hover-underline-rl::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background-color: yellow;
+            transform: scaleX(0);
+            transform-origin: left; /* ✅ KEEP IT RIGHT ON BOTH */
+            transition: transform 0.5s ease;
+        }
+        
+        .hover-underline-rl:hover::after {
+            transform: scaleX(1);
+            transform-origin: right; /* ✅ KEEP IT RIGHT ON BOTH */
+
+            /* ⚠️ DO NOT CHANGE ORIGIN HERE */
+        }
+    </style>
+    
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('hidden');
+  }
+</script>
+
+
+</head>
+<body class="min-h-screen w-full overflow-x-hidden bg-gray-300 p-3 font-sans">
+    
+   
+        <div class="min-h-screen flex flex-col  shadow-2xl rounded-xl pt-3 sm:pt-0 pl-3 pr-3 pb-5 w-full max-auto bg-yellow-100">
+            
+
+            
+            <!-- NAVBAR HEHE -->
+
+            <!-- Placeholder for future About/Profile page -->
+
+            <div class="NAV BACKGROUND justify-center sticky top-0 z-50 w-full max-auto h-13 py-1 mb-5 rounded-lg bg-yellow-100 shadow-xl shadow-purple-400/30 sm:shadow-none rounded-b-lg sm:rounded-none"> <!--here i wanna add bg color so when i scroll down and navbar stuck up i dont want my text to get see though that little space so tell me how can i make my emmpty div bg coloured without putting inside anuythin it -->
+
+                <div id="mobileMenu" class="navbar bg-gradient-to-r from-purple-400 via-red-400 to-purple-400 rounded-lg flex flex-wrap items-center h-auto mb-3 mt-3 w-full">
+                    
+                    
+                    
+                    <div class="nav flex items-center justify-between w-full px-5 rounded-lg shadow-none  sm:shadow-2xl shadow-purple-400/30 sm:h-14 sm:flex flex-col sm:flex-row sm:space-x-6 mt-2 sm:mt-0">
+
+
+                        <!-- Placeholder for future About/Profile page -->
+
+                        <div class="left flex items-center items-center  mt-1 flex-col space-y-1 sm:space-x-6  sm:flex-row  sm:mt-0 sm:space-y-0">
+                            <div class="flex items-center space-x-2 rounded-lg transition-transform duration-300 hover:scale-105">
+                                <span class="text-2xl">🚀</span>
+                                <h1 class="text-2xl text-red-800" style="font-family: 'Russo One', sans-serif;">ComradeTask ★</h1>
+                            </div>
+                            <a href="{% url 'tasks' %}" class="text-lg font-mono uppercase tracking-widest font-semibold hover:text-red-600 transition hover-underline-rl hover:translate-y-[-1px] transition duration-300">Home</a>
+                            <a href="{% url 'about-us' %}" class="text-lg font-mono uppercase tracking-widest font-semibold hover:text-red-600 transition hover-underline-rl hover:translate-y-[-1px] transition duration-300">About</a>
+                        </div>
+                        
+                        
+                        <div class="right flex items-center flex-col mb-2 space-y-1 sm:flex-row  sm:mb-0 sm:space-y-0">
+                            {% comment %} <span class="sm:h-1 w-1 bg-red-400 rounded-full animate-ping"></span> {% endcomment %}
+                            <a href="{% url 'profile-view' %}" class="text-lg font-mono uppercase tracking-widest sm:ml-3 font-semibold hover:text-red-600 transition hover-underline-rl hover:translate-y-[-1px] transition duration-300">
+                                Profile
+                            </a>
+                            
+                                <form class="text-lg font-mono uppercase tracking-widest sm:ml-6 font-semibold hover:text-red-600 transition hover-underline-rl hover:translate-y-[-1px] transition duration-300" method="POST" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button>LOGOUT</button>
+                                </form>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="burger mb-3 rounded-lg sticky top-0 z-50 bg-amber-50 sm:mb-3">
+                    <div class="flex justify-center font-bold mt-3">
+                        <button onclick="toggleMenu()" 
+                            class="flex items-center px-6 py-1 bg-gradient-to-r from-yellow-300 via-red-100 to-yellow-300 rounded-md shadow-lg hover:bg-purple-400 active:scale-95 transition-all duration-300 sm:hidden">
+                            ☰
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-grow">
+                {% block content %}
+                
+                {% endblock %}
+            </div>
+            <footer class="bg-yellow-100 text-center text-xs text-gray-700 rounded-b-xl py-2">
+                "Action is the only bridge between dreams and reality, and we are here to help you build that discipline to take action."<br>
+                Made with 🖤 by <a href="https://github.com/WDev4nsh">WDev4nsh</a> • © 2025 ComradeTask v2.04 • Built with 🖤 and 💻
+            </footer>
+
+
+        </div>    
+</body>
+</html>

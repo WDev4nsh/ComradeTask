@@ -1,0 +1,26 @@
+{% extends 'ct_todo/base.html' %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto mt-3 px-2 bg-gradient-to-r from-purple-50 via-red-200 to-purple-100 py-2 my-6 rounded-lg shadow-inner  overflow-x-auto">
+    <div class="heading flex justify-center text-2xl          bg-gradient-to-r from-purple-50 via-red-200 to-purple-100 text-center font-semibold py-2 mb-7 rounded-t-xl shadow-sm">
+        <h1 class="text-red-500">⚠️Delete Confirmation</h1>
+
+    </div>
+    <div class="font-semibold ml-5 text-lg my-7">
+        <p>
+            Are you sure you want to Delete the task:
+            <strong>{{ dtask.title }}</strong>
+        </p>
+
+        
+        <form method="POST" class="text-lg">
+            {% csrf_token %}
+            <div class="my-3 space-x-7">
+                <button type="submit" class="bg-red-500 text-white border-2 border-blue-300 rounded-lg px-5 py-1      transform transition-all duration-300 hover:scale-105 hover:translate-y-0 hover:shadow-2xl hover:bg-red-600"><b>Delete</b></button>
+                <a href="{% url 'tasks' %}" class="transform transition-all duration-300 hover:scale-105 hover:translate-y-0 inline-block">Cancel</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
