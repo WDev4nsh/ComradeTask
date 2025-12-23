@@ -37,6 +37,7 @@ class TaskForm(forms.ModelForm):
     category = forms.ModelChoiceField(
         queryset = Category.objects.all(),
         empty_label = 'Select a Category',
+        required=False,
         widget=forms.Select(attrs={
             'class': 'w-1/2 p-2 border border-red-500 rounded-lg bg-cyan shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500'
         })
